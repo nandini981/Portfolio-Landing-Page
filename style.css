@@ -579,10 +579,31 @@ section {
   color: var(--text-muted);
   line-height: 1.6;
   font-size: 0.95rem;
+  list-style: none;
+  padding: 0;
 }
 
 .timeline-description li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.timeline-description li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent-cyan);
+}
+
+.timeline-item:nth-child(odd) .timeline-description li {
+  padding-left: 0;
+  padding-right: 1.2rem;
+}
+
+.timeline-item:nth-child(odd) .timeline-description li::before {
+  left: auto;
+  right: 0;
 }
 
 /* Skills Section */
