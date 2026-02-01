@@ -514,7 +514,6 @@ section {
 
 .timeline-item:nth-child(odd) {
   left: 0;
-  text-align: right;
 }
 
 .timeline-item:nth-child(even) {
@@ -547,7 +546,7 @@ section {
   backdrop-filter: blur(10px);
   border: 1px solid var(--glass-border);
   border-radius: 15px;
-  padding: 1.5rem;
+  padding: 24px 28px;
   transition: var(--transition-normal);
 }
 
@@ -596,15 +595,6 @@ section {
   color: var(--accent-cyan);
 }
 
-.timeline-item:nth-child(odd) .timeline-description li {
-  padding-left: 0;
-  padding-right: 1.2rem;
-}
-
-.timeline-item:nth-child(odd) .timeline-description li::before {
-  left: auto;
-  right: 0;
-}
 
 /* Skills Section */
 .skills-grid {
