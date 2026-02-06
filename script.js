@@ -15,7 +15,7 @@ let typingSpeed = 100;
 
 function typeEffect() {
     const currentPhrase = phrases[phraseIndex];
-    
+
     if (isDeleting) {
         typingText.textContent = currentPhrase.substring(0, charIndex - 1);
         charIndex--;
@@ -25,7 +25,7 @@ function typeEffect() {
         charIndex++;
         typingSpeed = 100;
     }
-    
+
     if (!isDeleting && charIndex === currentPhrase.length) {
         isDeleting = true;
         typingSpeed = 2000; // Pause at end
@@ -34,7 +34,7 @@ function typeEffect() {
         phraseIndex = (phraseIndex + 1) % phrases.length;
         typingSpeed = 500; // Pause before next phrase
     }
-    
+
     setTimeout(typeEffect, typingSpeed);
 }
 
@@ -62,17 +62,17 @@ class Particle {
         this.speedY = Math.random() * 1 - 0.5;
         this.opacity = Math.random() * 0.5 + 0.2;
     }
-    
+
     update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        
+
         if (this.x > canvas.width) this.x = 0;
         if (this.x < 0) this.x = canvas.width;
         if (this.y > canvas.height) this.y = 0;
         if (this.y < 0) this.y = canvas.height;
     }
-    
+
     draw() {
         ctx.fillStyle = `rgba(102, 126, 234, ${this.opacity})`;
         ctx.beginPath();
@@ -89,19 +89,19 @@ function initParticles() {
 
 function animateParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     particles.forEach(particle => {
         particle.update();
         particle.draw();
     });
-    
+
     // Connect particles
     particles.forEach((a, i) => {
         particles.slice(i + 1).forEach(b => {
             const dx = a.x - b.x;
             const dy = a.y - b.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
-            
+
             if (distance < 100) {
                 ctx.strokeStyle = `rgba(102, 126, 234, ${0.2 * (1 - distance / 100)})`;
                 ctx.lineWidth = 1;
@@ -112,7 +112,7 @@ function animateParticles() {
             }
         });
     });
-    
+
     requestAnimationFrame(animateParticles);
 }
 
@@ -135,7 +135,7 @@ const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            
+
             // Animate skill bars when they come into view
             if (entry.target.classList.contains('skill-category')) {
                 const skillItems = entry.target.querySelectorAll('.skill-item');
@@ -165,12 +165,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         if (target) {
             const navHeight = document.querySelector('nav').offsetHeight;
             const targetPosition = target.offsetTop - navHeight;
-            
+
             window.scrollTo({
                 top: targetPosition,
                 behavior: 'smooth'
             });
-            
+
             // Close mobile menu if open
             if (window.innerWidth <= 968) {
                 navLinks.classList.remove('active');
@@ -186,13 +186,13 @@ let lastScroll = 0;
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
-    
+
     if (currentScroll > 100) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
     }
-    
+
     lastScroll = currentScroll;
 });
 
@@ -202,7 +202,7 @@ const navLinks = document.getElementById('navLinks');
 
 mobileMenuToggle.addEventListener('click', () => {
     navLinks.classList.toggle('active');
-    
+
     // Toggle icon
     if (navLinks.classList.contains('active')) {
         mobileMenuToggle.innerHTML = '<i class="fas fa-times"></i>';
@@ -224,11 +224,11 @@ window.addEventListener('scroll', () => {
 // Add hover effect to timeline items
 const timelineItems = document.querySelectorAll('.timeline-item');
 timelineItems.forEach(item => {
-    item.addEventListener('mouseenter', function() {
+    item.addEventListener('mouseenter', function () {
         this.style.transform = 'scale(1.02)';
     });
-    
-    item.addEventListener('mouseleave', function() {
+
+    item.addEventListener('mouseleave', function () {
         this.style.transform = 'scale(1)';
     });
 });
@@ -236,7 +236,7 @@ timelineItems.forEach(item => {
 // Add animation to cards on hover
 const cards = document.querySelectorAll('.glass-card, .education-card, .cert-card');
 cards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
+    card.addEventListener('mouseenter', function () {
         this.style.transition = 'all 0.3s ease';
     });
 });
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('scroll', () => {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
-    
+
     let current = '';
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
@@ -266,7 +266,7 @@ window.addEventListener('scroll', () => {
             current = section.getAttribute('id');
         }
     });
-    
+
     navLinks.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === `#${current}`) {
@@ -285,7 +285,7 @@ if (circles.length > 0) {
         circle.y = 0;
     });
 
-    window.addEventListener('mousemove', function(e) {
+    window.addEventListener('mousemove', function (e) {
         coords.x = e.clientX;
         coords.y = e.clientY;
     });
@@ -293,13 +293,13 @@ if (circles.length > 0) {
     function animateCursor() {
         let x = coords.x;
         let y = coords.y;
-        
+
         circles.forEach(function (circle, index) {
             circle.style.left = x - 12 + 'px';
             circle.style.top = y - 12 + 'px';
-            
+
             circle.style.scale = (circles.length - index) / circles.length;
-            
+
             circle.x = x;
             circle.y = y;
 
@@ -307,10 +307,10 @@ if (circles.length > 0) {
             x += (nextCircle.x - x) * 0.3;
             y += (nextCircle.y - y) * 0.3;
         });
-        
+
         requestAnimationFrame(animateCursor);
     }
-    
+
     animateCursor();
 }
 
