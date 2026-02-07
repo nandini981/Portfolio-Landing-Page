@@ -19,16 +19,16 @@
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Three.js and GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Animated Background -->
-    <div class="animated-bg">
-        <div class="gradient-orb orb-1"></div>
-        <div class="gradient-orb orb-2"></div>
-        <div class="gradient-orb orb-3"></div>
-    </div>
+    <div id="canvas-container"></div>
 
     <!-- Navigation -->
     <nav id="navbar">
@@ -52,7 +52,6 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <canvas id="particles"></canvas>
         <div class="hero-content">
             <h1 class="hero-title fade-in">
                 Hi, I'm <span class="gradient-text">Nandini Saini</span>
