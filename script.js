@@ -48,17 +48,20 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x0a0a1a); // Dark background to match theme
 scene.fog = new THREE.FogExp2(0x0a0a1a, 0.02);
 
-const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+const canvasContainer = document.getElementById('canvas-container');
+const width = canvasContainer.offsetWidth;
+const height = canvasContainer.offsetHeight;
+
+const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
 camera.position.set(0, 30, 30);
 camera.lookAt(0, 0, 0);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(width, height);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-const canvasContainer = document.getElementById('canvas-container');
 if (canvasContainer) {
     canvasContainer.appendChild(renderer.domElement);
 }
@@ -163,7 +166,7 @@ let previousMouseY = 0;
 let startDragX = 0;
 let startDragY = 0;
 
-window.addEventListener('mousedown', (e) => {
+renderer.domElement.addEventListener('mousedown', (e) => {
     isDragging = true;
     previousMouseX = e.clientX;
     previousMouseY = e.clientY;
@@ -172,8 +175,9 @@ window.addEventListener('mousedown', (e) => {
 });
 
 window.addEventListener('mousemove', (event) => {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    const rect = renderer.domElement.getBoundingClientRect();
+    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
     // Handle Rotation
     if (isDragging) {
@@ -190,6 +194,9 @@ window.addEventListener('mousemove', (event) => {
         previousMouseX = event.clientX;
         previousMouseY = event.clientY;
     }
+
+    // Check bounds for ripple inside canvas
+    if (mouse.x < -1 || mouse.x > 1 || mouse.y < -1 || mouse.y > 1) return;
 
     // Handle Ripple & Glow
     raycaster.setFromCamera(mouse, camera);
@@ -213,6 +220,7 @@ window.addEventListener('mousemove', (event) => {
 });
 
 window.addEventListener('mouseup', (e) => {
+    if (!isDragging) return;
     isDragging = false;
 
     // Check if it was a click (minimal movement < 5px)
@@ -332,9 +340,11 @@ animate();
 
 // Resize canvas on window resize
 window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    const width = canvasContainer.offsetWidth;
+    const height = canvasContainer.offsetHeight;
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(width, height);
 });
 
 // Scroll Animations
