@@ -227,7 +227,7 @@ nav.scrolled {
 
 .hero-description {
   font-size: 1.1rem;
-  color: var(--text-muted);
+  color: var(--text-primary);
   max-width: 600px;
   margin: 0 auto 3rem;
   line-height: 1.8;
